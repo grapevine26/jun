@@ -28,10 +28,7 @@ streamHandler.setFormatter(formatter)
 # Handler 를 logging 에 추가
 logger.addHandler(fileHandler)
 logger.addHandler(streamHandler)
-
-
 def generateInserQuery(listValues):
-
     insertValueList = []
     loopCnt = 0
     returnTimeStamp = generateTimeSerial()
@@ -55,22 +52,6 @@ def generateInserQuery(listValues):
         insertValueList.append(values)
 
     return str(insertValueList).replace('[', '').replace(']', '')
-
-
-# def hashWordGenerate1():
-#     word_site = "http://svnweb.freebsd.org/csrg/share/dict/words?view=co&content-type=text/plain"
-#
-#     response = requests.get(word_site)
-#     WORDS = response.content.splitlines()
-#     hashList = []
-#
-#     with open('hashVal3.csv', 'w') as writeFile:
-#         for eachWord in WORDS:
-#             hash2 = hashlib.md5(eachWord).hexdigest()
-#             writeFile.write(hash2 + '\n')
-#
-#     writeFile.close()
-#
 
 
 def generateTimeSerial():
@@ -172,7 +153,6 @@ if __name__ == '__main__':
     #b75c360edbcc27b6e659f9a3786f7aac
 
     #2. 쿼리 생성 실행
-    print(generateInserQuery(hashValList))
     insert_command = """INSERT INTO crawler_score (
                  insertedTime, origin_ph, platform, page_id, username, gender, phone_number, birthday, address1, address2, address3,
                  company1, company2, company3, university1, university2, university3, contact1, contact2,
@@ -187,7 +167,6 @@ if __name__ == '__main__':
                  friends_correlation_score, contents_regular, tscore, cscore, mscore, user_rate
                  ) VALUES """ + generateInserQuery(hashValList)
 
-    print(insert_command)
 
     with open('aster.sql', 'w') as out:
         out.write(insert_command)
